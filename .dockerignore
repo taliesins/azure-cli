@@ -1,6 +1,6 @@
 # Exclude everything by default
 *
-# Make an exception for azure-cli source code
+# Make an exception for requirements source code
 !requirements.txt
 # Make an exception for azure-cli source code
 !src/*

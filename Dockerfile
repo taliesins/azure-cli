@@ -11,6 +11,8 @@ ARG CLI_VERSION
 ARG BUILD_DATE
 
 ENV JP_VERSION="0.1.3"
+ENV KUBE_VERSION="v1.9.3"
+ENV HELM_VERSION="v2.8.1"
 
 LABEL maintainer="Microsoft" \
       org.label-schema.schema-version="1.0" \
@@ -38,6 +40,14 @@ RUN apk add --no-cache bash openssh ca-certificates jq wget openssl git \
  && update-ca-certificates \
  && wget https://github.com/jmespath/jp/releases/download/${JP_VERSION}/jp-linux-amd64 -qO /usr/local/bin/jp \
  && chmod +x /usr/local/bin/jp \
+ && wget https://storage.googleapis.com/kubernetes-release/release/${KUBE_VERSION}/bin/linux/amd64/kubectl -qO /usr/local/bin/kubectl \
+ && chmod +x /usr/local/bin/kubectl \
+ && wget https://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz -qO /tmp/helm-${HELM_VERSION}-linux-amd64.tar.gz \
+ && tar -zxvf /tmp/helm-${HELM_VERSION}-linux-amd64.tar.gz -C /tmp \
+ && mv /tmp/linux-amd64/helm /usr/local/bin/helm \
+ && rm -rf /tmp/linux-amd64 \
+ && rm -f /tmp/helm-${HELM_VERSION}-linux-amd64.tar.gz \
+ && chmod +x /usr/local/bin/helm \
 # pip wheel - required for CLI packaging
 # jmespath-terminal - we include jpterm as a useful tool
  && pip install --no-cache-dir --upgrade jmespath-terminal -r requirements.txt \
