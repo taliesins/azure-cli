@@ -1,6 +1,8 @@
 # Exclude everything by default
 *
 # Make an exception for azure-cli source code
+!requirements.txt
+# Make an exception for azure-cli source code
 !src/*
 # Make an exception for private SDKs if they exist
 !privates/*
